@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.board.domain.Board;
 import kr.board.mapper.BoardMapper;
@@ -24,6 +25,11 @@ public class BoardController {
 
 	//1. 게시판 리스트를 보여달라는 요청을 받아서 DB에서 가져오는 일
 	//HandlerMapping
+	@RequestMapping("/") //첫페이지 
+	public String main() {
+		return "basic";
+	}
+	
 	@RequestMapping("/boardList.do")
 	public String boardList(Model model) { //httpservelet -> model : spring 객체 바인딩을 하기 위한 class , 
 		//jsp로 보내기 
@@ -74,5 +80,13 @@ public class BoardController {
 		mapper.boardUpdate(vo);
 		return "redirect:/boardList.do";
 		
+	}
+	@RequestMapping("/boardListAjax.do")
+	public @ResponseBody List<Board> boardListAjax() {
+		List<Board> list=mapper.boardList();
+		//여기서 json data format 으로 응답 해야 함
+		// List<Board>를 -> Gson API이용 -> String(JSON) 형태로 변환
+		return list; //List<Board> -> jakson -> String(JSON)
+		//responsebody로 객체를 반환하게 되면 jackson데이터 바인드에 의해서 json포맷으로 변경 됨 (배열형태)	
 	}
 }
