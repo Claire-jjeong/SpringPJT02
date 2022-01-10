@@ -89,4 +89,8 @@ public class BoardController {
 		return list; //List<Board> -> jakson -> String(JSON)
 		//responsebody로 객체를 반환하게 되면 jackson데이터 바인드에 의해서 json포맷으로 변경 됨 (배열형태)	
 	}
+	@RequestMapping("/boardInsertAjax.do")
+	public @ResponseBody void boardInsertAjax(Board vo) {
+		mapper.boardInsert(vo);
+	}
 }
