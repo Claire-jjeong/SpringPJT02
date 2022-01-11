@@ -39,12 +39,24 @@
   		$.each(data,function(index,obj){
   			blist+="<tr>";
   	  		blist+="<td>"+obj.idx+"</td>";
-  	  		blist+="<td>"+obj.title+"</td>";
+  	  		blist+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
   	  		blist+="<td>"+obj.writer+"</td>";
   	  		blist+="<td>"+obj.indate+"</td>";
   	  		blist+="<td>"+obj.count+"</td>";
   	  		blist+="</tr>";
+  	  		
+  		//제목 눌렀을 때 나오는 화면 
+            blist+="<tr id='cv"+obj.idx+"' style='display:none'>";
+            blist+="<td>내용</td>";
+            blist+="<td colspan='4'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
+            blist+="<br/>";
+           blist+="<button class='btn btn-info btn-sm'>수정</button>";
+           blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
+           blist+="&nbsp;<button class='btn btn-danger btn-sm' onclick='goClose("+obj.idx+")'>닫기</button>";
+           blist+="</td>";
+            blist+="</tr>";
   		});
+	      
   		
   		blist+="<tr>";
   		blist+="<td colspan='5'>";
@@ -57,6 +69,18 @@
   		blist+="</table>";
   		$(".blist").html(blist);
   	}
+  	function goClose(idx){
+        $("#cv"+idx).css("display","none");
+     }
+     
+     function goContent(idx){
+        if($("#cv"+idx).css("display")=="none"){
+          $("#cv"+idx).css("display","table-row");
+        }else{
+           $("#cv"+idx).css("display","none");
+        }
+     }
+  	
   	function goForm(){
   		if($(".rform").css("display")=="block"){
   			//$(".rform").css("display","none");
@@ -79,6 +103,10 @@
   			success: loadList,
   			error:function(){alert("error");}
   		});
+  		
+  		//취소버튼을 강제로 클릭하기
+  		$(".cancel").trigger("click");
+  		
   		$(".rform").css("display","none"); //글 쓴 다음에 안보이게 됨 
   	}
   </script>
@@ -117,7 +145,8 @@
 		  <div class="form-group"> 
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="button" class="btn btn-success btn-sm" onclick="goInsert()">글쓰기</button>
-		      <button type="reset" class="btn btn-warning btn-sm">취소</button>
+		      <button type="reset" class="btn btn-warning btn-sm cancel">취소</button>
+		      
 		    </div>
 		  </div>
 		</form>
