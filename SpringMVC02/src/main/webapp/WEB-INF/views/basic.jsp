@@ -16,7 +16,21 @@
   	$(document).ready(function(){
   		//서버와 통신 ($.ajax())
   		loadList();
+  		
   	});
+  	//수정기능
+  	function upClick(idx){ //idx에 맞는 content가져오기
+  		var contents=$("#c"+idx).val();
+  		$.ajax({
+  			url : "${cpath}/boardContentUpdateAjax.do",
+  			type:"post",
+  			data:{"idx":idx, "contents":contents},
+  			success: loadList,
+  			error: function(){
+  				alert("error");
+  			}
+  		});
+  	}
   	function loadList(){
   		$.ajax({
   			url:"${cpath}/boardListAjax.do",
@@ -48,9 +62,9 @@
   		//제목 눌렀을 때 나오는 화면 
             blist+="<tr id='cv"+obj.idx+"' style='display:none'>";
             blist+="<td>내용</td>";
-            blist+="<td colspan='4'><textarea rows='7' class='form-control'>"+obj.contents+"</textarea>";
+            blist+="<td colspan='4'><textarea rows='7' id='c"+obj.idx+"' class='form-control'>"+obj.contents+"</textarea>";
             blist+="<br/>";
-           blist+="<button class='btn btn-info btn-sm'>수정</button>";
+           blist+="<button class='btn btn-info btn-sm' onclick='upClick("+obj.idx+")'>수정</button>";
            blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
            blist+="&nbsp;<button class='btn btn-danger btn-sm' onclick='goClose("+obj.idx+")'>닫기</button>";
            blist+="</td>";

@@ -5,6 +5,7 @@ package kr.board.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
 
 import kr.board.domain.Board;
 //JDBC
@@ -23,4 +24,7 @@ public interface BoardMapper { //DB와 연동
 	public void boardDelete(int idx);
 	
 	public void boardUpdate(Board vo);
+	
+	@Update("update board set contents=#{contents} where idx=#{idx}")
+	public void boardContentUpdateAjax(Board vo);
 }

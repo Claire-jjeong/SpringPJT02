@@ -93,4 +93,9 @@ public class BoardController {
 	public @ResponseBody void boardInsertAjax(Board vo) {
 		mapper.boardInsert(vo);
 	}
+	@RequestMapping("/boardContentUpdateAjax.do")
+	public @ResponseBody void boardContentUpdateAjax(Board vo) {
+			//요청이 왔던 곳으로 다시 응답이 가야하기 때문
+		mapper.boardContentUpdateAjax(vo);
+	}
 }
