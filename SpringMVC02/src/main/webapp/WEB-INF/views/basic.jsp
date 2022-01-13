@@ -49,20 +49,24 @@
   		blist+="<td>작성자</td>";
   		blist+="<td>작성일</td>";
   		blist+="<td>조회수</td>";
+  		blist+="<td>수정</td>";
+  		blist+="<td>삭제</td>";
   		blist+="</tr>";
   		$.each(data,function(index,obj){
   			blist+="<tr>";
   	  		blist+="<td>"+obj.idx+"</td>";
-  	  		blist+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
-  	  		blist+="<td>"+obj.writer+"</td>";
+  	  		blist+="<td id='t"+obj.idx+"'><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
+  	  		blist+="<td id = 'w"+obj.idx+"'>"+obj.writer+"</td>";
   	  		blist+="<td>"+obj.indate+"</td>";
   	  		blist+="<td>"+obj.count+"</td>";
+  	  		blist+="<td id = 'u"+obj.idx+"'><button class='btn btn-info btn-sm' onclick='goUpdate("+obj.idx+")'>수정</button></td>"; //upclick은 제목만 수정
+  	  		blist+="<td><button class='btn btn-warning btn-sm' onclick='goDelete("+obj.idx+")'>삭제</button></td>";
   	  		blist+="</tr>";
   	  		
   		//제목 눌렀을 때 나오는 화면 
             blist+="<tr id='cv"+obj.idx+"' style='display:none'>";
             blist+="<td>내용</td>";
-            blist+="<td colspan='4'><textarea rows='7' id='c"+obj.idx+"' class='form-control'>"+obj.contents+"</textarea>";
+            blist+="<td colspan='6'><textarea rows='7' id='c"+obj.idx+"' class='form-control'>"+obj.contents+"</textarea>";
             blist+="<br/>";
            blist+="<button class='btn btn-info btn-sm' onclick='upClick("+obj.idx+")'>수정</button>";
            blist+="&nbsp;<button class='btn btn-warning btn-sm'>취소</button>";
@@ -73,7 +77,7 @@
 	      
   		
   		blist+="<tr>";
-  		blist+="<td colspan='5'>";
+  		blist+="<td colspan='7'>";
   		blist+="<button class = 'btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
   		blist+="</td>";
   		blist+="</tr>";
@@ -83,6 +87,27 @@
   		blist+="</table>";
   		$(".blist").html(blist);
   	}
+  	function goUpdate(idx){ //클릭시 제목,작성자,수정 업데이트 필요
+  		var newTitle="<input type='text' class='form-control'>";
+  		$("#t"+idx).html(newTitle);
+  		
+  		var newWriter="<input type='text' class='form-control'>";
+  		$("#w"+idx).html(newWriter);
+  	
+  		var newUpdate="<button class='btn btn-success btn-sm'>수정하기</button>"
+  		$("#u"+idx).html(newUpdate);
+  	}
+  	
+  	function goDelete(idx){
+  		$.ajax({
+  			url:"${cpath}/boardDeleteAjax.do",
+  			type : "get",
+  			data : {"idx":idx},
+  			success: loadList,
+  			error:function(){alert("error");}
+  		});
+  	}
+  	
   	function goClose(idx){
         $("#cv"+idx).css("display","none");
      }
@@ -123,6 +148,8 @@
   		
   		$(".rform").css("display","none"); //글 쓴 다음에 안보이게 됨 
   	}
+  	
+  	
   </script>
 </head>
 <body>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -97,5 +98,9 @@ public class BoardController {
 	public @ResponseBody void boardContentUpdateAjax(Board vo) {
 			//요청이 왔던 곳으로 다시 응답이 가야하기 때문
 		mapper.boardContentUpdateAjax(vo);
+	}
+	@RequestMapping("/boardDeleteAjax.do") //post:postmapping
+	public @ResponseBody void boardDeleteAjax(int idx) {
+		mapper.boardDelete(idx);
 	}
 }
