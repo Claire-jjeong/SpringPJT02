@@ -96,11 +96,15 @@ public class BoardController {
 	}
 	@RequestMapping("/boardContentUpdateAjax.do")
 	public @ResponseBody void boardContentUpdateAjax(Board vo) {
-			//요청이 왔던 곳으로 다시 응답이 가야하기 때문
+			//요청이 왔던 곳으로 다시 응답이 가야하기 때문 (jsp가 아닌 ajax로 감)
 		mapper.boardContentUpdateAjax(vo);
 	}
 	@RequestMapping("/boardDeleteAjax.do") //post:postmapping
 	public @ResponseBody void boardDeleteAjax(int idx) {
 		mapper.boardDelete(idx);
+	}
+	@RequestMapping("/boardTWUpdateAjax.do")
+	public @ResponseBody void boardTWUpdateAjax(Board vo) {
+		mapper.boardTWUpdateAjax(vo);
 	}
 }

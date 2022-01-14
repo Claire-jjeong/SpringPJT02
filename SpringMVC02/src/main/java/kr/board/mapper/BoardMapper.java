@@ -27,4 +27,7 @@ public interface BoardMapper { //DB와 연동
 	
 	@Update("update board set contents=#{contents} where idx=#{idx}")
 	public void boardContentUpdateAjax(Board vo);
+	
+	@Update("update board set title=#{title}, writer=#{writer} where idx=#{idx}")
+	public void boardTWUpdateAjax(Board vo);
 }

@@ -88,14 +88,28 @@
   		$(".blist").html(blist);
   	}
   	function goUpdate(idx){ //클릭시 제목,작성자,수정 업데이트 필요
-  		var newTitle="<input type='text' class='form-control'>";
+  		var title=$("#t"+idx).text(); //기존 값 가져오기
+  		var newTitle="<input type='text' id = 'nt"+idx+"' class='form-control' value='"+title+"'>";
   		$("#t"+idx).html(newTitle);
   		
-  		var newWriter="<input type='text' class='form-control'>";
+  		var writer=$("#w"+idx).text();
+  		var newWriter="<input type='text' id = 'nw"+idx+"' class='form-control' value = '"+writer+"'>";
   		$("#w"+idx).html(newWriter);
   	
-  		var newUpdate="<button class='btn btn-success btn-sm'>수정하기</button>"
+  		var newUpdate="<button class='btn btn-success btn-sm' onclick='update("+idx+")'>수정하기</button>"
   		$("#u"+idx).html(newUpdate);
+  	}
+  	function update(idx){ //idx 가져와서 title,writer 수정 내용 저장하기
+  		var title=$("#nt"+idx).val();
+  		var writer=$("#nw"+idx).val();
+  		
+  		$.ajax({
+  			url: "${cpath}/boardTWUpdateAjax.do",
+  			type:"post",
+  			data:{"idx":idx, "title":title, "writer":writer},
+  			success: loadList,
+  			error:function(){alert("error");}
+  		});
   	}
   	
   	function goDelete(idx){
