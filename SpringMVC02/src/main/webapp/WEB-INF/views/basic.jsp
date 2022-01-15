@@ -120,7 +120,7 @@
   			success: loadList,
   			error:function(){alert("error");}
   		});
-  	}
+  	} 
   	
   	function goClose(idx){
         $("#cv"+idx).css("display","none");
