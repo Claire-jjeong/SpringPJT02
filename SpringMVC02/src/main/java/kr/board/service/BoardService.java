@@ -11,7 +11,7 @@ import kr.board.mapper.BoardMapper;
 @Service
 public class BoardService { //로직구현
 
-	@Autowired(required=false)
+	@Autowired
 	private BoardMapper mapper; //db연동 역할 --> requestmapping 필요 없음 
 	
 	public List<Board> boardListAjax() {
